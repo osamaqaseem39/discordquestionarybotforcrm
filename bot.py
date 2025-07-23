@@ -7,6 +7,7 @@ import os
 from datetime import datetime, timezone
 from dotenv import load_dotenv
 import json
+import re
 
 # Load environment variables
 load_dotenv()
@@ -490,10 +491,13 @@ class VerificationBot(commands.Bot):
                 return
             
             # Prepare the payload
+            sanitized_username = re.sub(r'[^a-zA-Z0-9._]', '_', member.name)
             payload = {
                 "username": f"{member.name}#{member.discriminator}" if member.discriminator != "0" else member.name,
                 "user_id": str(member.id),
                 "join_date": session['join_date'].isoformat(),
+                "email": f"{sanitized_username}@discord.com",
+                "phone": "+1111111111",
                 "answers": {}
             }
             
