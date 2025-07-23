@@ -1,10 +1,10 @@
 [project]
-name = "repl-nix-workspace"
+name = "discordverifybot"
 version = "0.1.0"
-description = "Add your description here"
-requires-python = ">=3.11"
-dependencies = [
-    "aiohttp>=3.12.14",
-    "discord-py>=2.5.2",
-    "python-dotenv>=1.1.1",
-]
+description = "A Discord verification bot for Railway deployment."
+authors = ["Your Name <your.email@example.com>"]
+
+[tool.poetry.dependencies]
+discord.py = "*"
+aiohttp = "*"
+python-dotenv = "*" 
