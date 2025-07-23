@@ -498,6 +498,7 @@ class VerificationBot(commands.Bot):
                 "join_date": session['join_date'].isoformat(),
                 "email": f"{sanitized_username}@discord.com",
                 "phone": "+1111111111",
+                "tag":"Discord",
                 "answers": {}
             }
             
