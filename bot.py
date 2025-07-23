@@ -15,7 +15,7 @@ load_dotenv()
 # Bot configuration
 DISCORD_TOKEN = os.getenv('DISCORD_BOT_TOKEN')
 GOHIGHLEVEL_WEBHOOK_URL = os.getenv('GOHIGHLEVEL_WEBHOOK_URL')
-VERIFY_CHANNEL_NAME = '✅-verify-access'
+VERIFY_CHANNEL_NAME = '✅-vérification-accès'
 VERIFIED_ROLE_NAME = 'Verified'
 
 # Verification questions (in French)
