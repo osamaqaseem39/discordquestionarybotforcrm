@@ -20,10 +20,10 @@ VERIFIED_ROLE_NAME = 'Verified'
 
 # Verification questions (in French)
 VERIFICATION_QUESTIONS = [
-    "Qu'est-ce qui vous intéresse le plus dans Amazon FBA ?",
-    "Avez-vous déjà essayé Amazon FBA ?",
-    "Quel est votre plus grand défi avec FBA en ce moment ?",
-    "Vendez-vous actuellement ou êtes-vous en phase de recherche ?"
+    "Quel est votre niveau d’expérience avec Amazon FBA ?",
+    "Quel est votre objectif principal en rejoignant cette communauté d'élite ?",
+    "Quand prévoyez-vous de lancer votre business Amazon FBA ?",
+    "Êtes-vous prêt(e) à investir pour réussir votre projet Amazon FBA ?"
 ]
 
 # Question keys for JSON payload
