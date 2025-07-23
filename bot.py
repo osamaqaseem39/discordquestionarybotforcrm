@@ -18,12 +18,12 @@ GOHIGHLEVEL_WEBHOOK_URL = os.getenv('GOHIGHLEVEL_WEBHOOK_URL')
 VERIFY_CHANNEL_NAME = '✅-verify-access'
 VERIFIED_ROLE_NAME = 'Verified'
 
-# Verification questions
+# Verification questions (in French)
 VERIFICATION_QUESTIONS = [
-    "What interests you most about Amazon FBA?",
-    "Have you tried Amazon FBA before?",
-    "What's your biggest challenge with FBA right now?",
-    "Are you currently selling, or just researching?"
+    "Qu'est-ce qui vous intéresse le plus dans Amazon FBA ?",
+    "Avez-vous déjà essayé Amazon FBA ?",
+    "Quel est votre plus grand défi avec FBA en ce moment ?",
+    "Vendez-vous actuellement ou êtes-vous en phase de recherche ?"
 ]
 
 # Question keys for JSON payload
@@ -53,7 +53,7 @@ class VerificationModal(discord.ui.Modal):
             # Get user session
             if user_id not in self.bot.verification_sessions:
                 await interaction.response.send_message(
-                    "❌ Verification session not found. Please contact an admin.",
+                    "❌ Session de vérification introuvable. Veuillez contacter un administrateur.",
                     ephemeral=True
                 )
                 return
@@ -68,15 +68,15 @@ class VerificationModal(discord.ui.Modal):
             # Check if more questions remain
             if session['step'] < len(VERIFICATION_QUESTIONS):
                 embed = discord.Embed(
-                    title="✅ Answer Recorded!",
-                    description=f"Question {self.step + 1} answered successfully.\n\nUse `/verify` again to continue with question {session['step'] + 1}.",
+                    title="✅ Réponse enregistrée!",
+                    description=f"Question {self.step + 1} répondu avec succès.\n\nUtilisez `/verify` à nouveau pour continuer avec la question {session['step'] + 1}.",
                     color=0x00ff00
                 )
                 await interaction.response.send_message(embed=embed, ephemeral=True)
             else:
                 # All questions completed
                 await interaction.response.send_message(
-                    "✅ All questions answered! Processing your verification...",
+                    "✅ Toutes les questions répondues! Traitement de votre vérification...",
                     ephemeral=True
                 )
                 # Complete verification
@@ -86,7 +86,7 @@ class VerificationModal(discord.ui.Modal):
         except Exception as e:
             print(f"Error in modal submission: {e}")
             await interaction.response.send_message(
-                "❌ An error occurred while saving your answer. Please try again.",
+                "❌ Une erreur est survenue lors de l'enregistrement de votre réponse. Veuillez réessayer.",
                 ephemeral=True
             )
 
@@ -168,16 +168,16 @@ class VerificationBot(commands.Bot):
             
             # Send verification message in the designated channel
             embed = discord.Embed(
-                title="🎉 Welcome to the Amazon FBA Community!",
-                description=f"Hey {member.mention}! To get verified and access all channels, please react with ✅ to this message to start your verification process.",
+                title="🎉 Bienvenue dans la communauté Amazon FBA!",
+                description=f"Hey {member.mention}! Pour obtenir la vérification et accéder à tous les canaux, veuillez réagir avec ✅ à ce message pour démarrer le processus de vérification.",
                 color=0x00ff00
             )
             embed.add_field(
-                name="📝 What happens next:",
-                value="• React with ✅ below to start\n• Answer 4 Amazon FBA questions privately\n• Get your Verified role automatically",
+                name="📝 Ce qui se passe ensuite:",
+                value="• Réagissez avec ✅ ci-dessous pour démarrer\n• Répondez à 4 questions Amazon FBA en privé\n• Obtenez votre rôle Vérifié automatiquement",
                 inline=False
             )
-            embed.set_footer(text=f"Welcome {member.display_name}!")
+            embed.set_footer(text=f"Bienvenue {member.display_name}!")
             
             # Send the message and add reaction
             verification_msg = await verify_channel.send(f"{member.mention}", embed=embed)
@@ -229,8 +229,8 @@ class VerificationBot(commands.Bot):
                         color=0x3498db
                     )
                     embed.add_field(
-                        name="📝 How to answer:",
-                        value="Please reply to this DM with your answer. Your response will be private.",
+                        name="📝 Comment répondre:",
+                        value="Veuillez répondre à ce DM avec votre réponse. Votre réponse sera privée.",
                         inline=False
                     )
                     await user.send(embed=embed)
@@ -241,8 +241,8 @@ class VerificationBot(commands.Bot):
                 except discord.Forbidden:
                     # If DM fails, send ephemeral message in channel
                     embed = discord.Embed(
-                        title="⚠️ DMs Required",
-                        description=f"{user.mention} Please enable DMs from server members to complete verification, or contact an admin for help.",
+                        title="⚠️ DM requis",
+                        description=f"{user.mention} Veuillez activer les DM des membres du serveur pour compléter la vérification, ou contactez un administrateur pour de l'aide.",
                         color=0xff9900
                     )
                     await reaction.message.channel.send(embed=embed, delete_after=10)
@@ -291,8 +291,8 @@ class VerificationBot(commands.Bot):
                     color=0x3498db
                 )
                 embed.add_field(
-                    name="📝 How to answer:",
-                    value="Please reply to this DM with your answer. Your response will be private.",
+                    name="📝 Comment répondre:",
+                    value="Veuillez répondre à ce DM avec votre réponse. Votre réponse sera privée.",
                     inline=False
                 )
                 await message.author.send(embed=embed)
@@ -300,8 +300,8 @@ class VerificationBot(commands.Bot):
             else:
                 # All questions completed
                 completion_embed = discord.Embed(
-                    title="✅ All questions answered!",
-                    description="Processing your verification...",
+                    title="✅ Toutes les questions répondues!",
+                    description="Traitement de votre vérification...",
                     color=0x00ff00
                 )
                 await message.author.send(embed=completion_embed)
@@ -327,11 +327,11 @@ class VerificationBot(commands.Bot):
             # Check if user has an active verification session
             if user_id not in self.verification_sessions:
                 await interaction.response.send_message(
-                    "❌ You don't have an active verification session. This might be because:\n"
-                    "• You already completed verification\n"
-                    "• Your session expired\n"
-                    "• You joined before the bot was online\n\n"
-                    "Please contact an admin for help.",
+                    "❌ Vous n'avez pas de session de vérification active. Cela peut être dû à:\n"
+                    "• Vous avez déjà complété la vérification\n"
+                    "• Votre session a expiré\n"
+                    "• Vous avez rejoint le serveur avant que le bot ne soit en ligne\n\n"
+                    "Veuillez contacter un administrateur pour de l'aide.",
                     ephemeral=True
                 )
                 return
@@ -341,7 +341,7 @@ class VerificationBot(commands.Bot):
             
             if current_step >= len(VERIFICATION_QUESTIONS):
                 await interaction.response.send_message(
-                    "✅ You have already completed all verification questions!",
+                    "✅ Vous avez déjà complété toutes les questions de vérification!",
                     ephemeral=True
                 )
                 return
@@ -353,7 +353,7 @@ class VerificationBot(commands.Bot):
         except Exception as e:
             print(f"Error in verify command: {e}")
             await interaction.response.send_message(
-                "❌ An error occurred. Please try again later.",
+                "❌ Une erreur est survenue. Veuillez réessayer plus tard.",
                 ephemeral=True
             )
     
@@ -441,8 +441,8 @@ class VerificationBot(commands.Bot):
                     verify_channel = discord.utils.get(guild.channels, name=VERIFY_CHANNEL_NAME)
                     if verify_channel:
                         admin_embed = discord.Embed(
-                            title="🔧 Manual Role Assignment Needed",
-                            description=f"**{member.mention} has completed verification** but I cannot assign roles automatically.\n\n**Admin Action Required:**\nPlease manually assign the `{VERIFIED_ROLE_NAME}` role to {member.mention}",
+                            title="🔧 Attribution de rôle manuelle nécessaire",
+                            description=f"**{member.mention} a complété la vérification** mais je ne peux pas attribuer les rôles automatiquement.\n\n**Action requise par l'administrateur:**\nVeuillez attribuer manuellement le rôle `{VERIFIED_ROLE_NAME}` à {member.mention}",
                             color=0xffa500
                         )
                         await verify_channel.send(embed=admin_embed)
@@ -450,8 +450,8 @@ class VerificationBot(commands.Bot):
                     # Also send DM to user
                     try:
                         user_embed = discord.Embed(
-                            title="✅ Verification Complete - Admin Review Required",
-                            description=f"You've successfully answered all verification questions! An admin has been notified to manually assign your `{VERIFIED_ROLE_NAME}` role.",
+                            title="✅ Vérification complète - Revue requise par l'administrateur",
+                            description=f"Vous avez répondu avec succès à toutes les questions de vérification! Un administrateur a été notifié pour attribuer manuellement votre rôle `{VERIFIED_ROLE_NAME}`.",
                             color=0x00ff00
                         )
                         await member.send(embed=user_embed)
@@ -466,8 +466,8 @@ class VerificationBot(commands.Bot):
             # Send DM confirmation
             try:
                 dm_embed = discord.Embed(
-                    title="🎉 You're now verified! Welcome aboard!",
-                    description="Thanks for completing the verification process. You now have access to all channels in the Amazon FBA community!",
+                    title="🎉 Vous êtes maintenant vérifié! Bienvenue à bord!",
+                    description="Merci d'avoir complété le processus de vérification. Vous avez maintenant accès à tous les canaux de la communauté Amazon FBA!",
                     color=0x00ff00
                 )
                 await member.send(embed=dm_embed)
